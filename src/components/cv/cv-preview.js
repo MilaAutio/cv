@@ -80,16 +80,16 @@ const CvPdf = ({formData}) => {
             <Page size="A4" style={styles.page}>
                 <View style={styles.header}>
                     <View style={styles.rightFloat}>
-                        <Text style={{fontFamily: 'Helvetica-Bold', marginBottom: '5pt', display: 'block'}}> {formData.first_name ?? ''} {formData.last_name ?? ''} </Text>
-                        <Text style={{display: 'block'}}> {formData.title ?? ''} </Text>
+                        <Text style={{fontFamily: 'Helvetica-Bold', marginBottom: '5pt', display: 'block'}}> {formData.first_name ?? 'Etunimi'} {formData.last_name ?? 'Sukunimi'} </Text>
+                        <Text style={{display: 'block'}}> {formData.title ?? 'Titteli'} </Text>
                     </View>
                     <View style={{display: "flex", flexDirection: 'column', alignItems: 'flex-end'}}>
-                        <Text style={{display: 'block', marginBottom: '5pt'}}> {formData.phone ?? ''} </Text>
-                        <Text style={{display: 'block'}}> {formData.email ?? ''} </Text>
+                        <Text style={{display: 'block', marginBottom: '5pt'}}> {formData.phone ?? '+358 000 000 000'} </Text>
+                        <Text style={{display: 'block'}}> {formData.email ?? 'example@gmail.com'} </Text>
                     </View>
                 </View>
                 <View style={styles.container}>
-                    <Text>{formData.description ?? ''}</Text>
+                    <Text>{formData.description ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur imperdiet non turpis ac aliquet. Nullam suscipit, nisi vitae convallis eleifend, erat orci ullamcorper libero, at tristique erat magna in libero. In in risus risus. Mauris tempus augue in pretium molestie. Fusce feugiat ullamcorper justo. Vestibulum at ultricies felis, vitae aliquet ex. Donec efficitur mi vel eros elementum, a auctor diam placerat. Nunc sodales sapien vitae orci euismod sagittis.'}</Text>
                 </View>
                 { formData.experience && (
                     <View style={styles.container}>
