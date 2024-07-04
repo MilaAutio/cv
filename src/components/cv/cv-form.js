@@ -1,17 +1,19 @@
-import {useState} from "react"
+import {useState, useContext} from "react"
+import { CVContext } from "./cv"
 
 export const CVForm = () => {
+
     return (
-        <div className="cv-container">
-            <FormItem title="Etunimi" name="first-name" type="Text"/>
-            <FormItem title="Sukunimi" name="last-name" type="Text"/>
+        <div className="cv-form">
+            <FormItem title="Etunimi" name="first_name" type="Text"/>
+            <FormItem title="Sukunimi" name="last_name" type="Text"/>
             <FormItem title="Puhelin" name="phone" type="Text"/>
             <FormItem title="Sähköposti" name="email" type="Text"/>
             <FormItem title="Titteli" name="title" type="Text"/>
-            <FormItem title="Kerro itsestäsi" name="email" type="Textarea"/>
+            <FormItem title="Kerro itsestäsi" name="description" type="Textarea"/>
             <RepeatorField title="Työkokemus" name="experience" 
                 fields={[
-                    { title: 'Yritys', name: 'company', type: "Text" },
+                    { title: 'Yritys', name: 'job_experience_company', type: "Text" },
                     { title: 'Titteli', name: 'job_experience_title', type: "Text" },
                     { title: 'Milloin työskentelit yrityksessä?', name: 'job_experience_era', type: "Text" },
                     { title: 'Kuvaus työstäsi', name: 'job_experience_description', type: "Textarea" }
@@ -43,13 +45,21 @@ export const CVForm = () => {
 }
 
 const FormItem = ({ type, name, title, options }) => {
-    var inputField = <input type={type} name={name}></input>;
+
+    const { formData, setFormData } = useContext(CVContext);
+
+    const updateFormData = (event) => {
+        var newFormData = { ...formData, [event.target.name] : [event.target.value] }
+        setFormData(newFormData)
+    }
+
+    var inputField = <input type={type} name={name} onChange={updateFormData}></input>;
     if( type === 'Textarea') {
-        inputField = <textarea rows="5" name={name}></textarea>;
+        inputField = <textarea rows="5" name={name} onChange={updateFormData}></textarea>;
     } else if( type === 'Select' ) {
         if(options) {
             options = options.map((option, index) => <option key={index}>{option}</option>);
-            inputField = <select name={name}>{options}</select>;
+            inputField = <select name={name} onChange={updateFormData}><option>Valitse vaihtoehto</option>{options}</select>;
         }
     }
     return (
@@ -63,6 +73,7 @@ const FormItem = ({ type, name, title, options }) => {
 const RepeatorField = ({title, name, fields}) => {
 
     const [fieldList, setFieldList] = useState([]);
+    const { formData, setFormData } = useContext(CVContext);
 
     const addNewRow = () => {
         var new_field = {
@@ -79,18 +90,27 @@ const RepeatorField = ({title, name, fields}) => {
         setFieldList(new_fieldList);
     };
 
+    const updateFormData = (event, key) => {
+        var newFormData = { ...formData }
+        newFormData[name] = newFormData[name] || [];
+        newFormData[name][key] = newFormData[name][key] || {};
+        newFormData[name][key][event.target.name] = event.target.value;
+        setFormData(newFormData)
+    }
+
     return (
         <div className="repeator-field">
             <label htmlFor={name}>{title}:</label>
             {
-                fieldList.map((row) => {
+                fieldList.map((row, key) => {
                     var fields = row.fields.map((field, index) => {
-                        var inputField = <input type={field.type} name={field.name}></input>
+                        var inputField = <input type={field.type} name={field.name} onChange={(event) => updateFormData(event, key)}></input>
                         if( field.type === 'Textarea') {
-                            inputField = <textarea rows="5" name={field.name}></textarea>;
+                            inputField = <textarea rows="5" name={field.name} onChange={(event) => updateFormData(event, key)}></textarea>;
                         } else if( field.type === 'Select' ) {
                             if(field.options) {
-                                inputField = <select name={field.name}>
+                                inputField = <select name={field.name} onChange={(event) => updateFormData(event, key)}>
+                                    <option>Valitse vaihtoehto</option>
                                     {field.options.map((option, index) => <option key={index}>{option}</option>)}
                                 </select>
                             }
