@@ -7,10 +7,52 @@ body {
 }
 
 .page-content {
-    padding: 5rem 3rem;
+  padding: 5rem 3rem;
 }
 
-.content-area {
-    max-width: 80%;
-    margin: 0 auto;
+.cv-container {
+  display: flex;
+  gap: 4rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 100%;
+  overflow-x: scroll;
+  @media screen and (max-width: 910px ) {
+    justify-content: flex-start;
+  }
+}
+
+@media screen and (max-width: 910px) {
+  .cv-container > * {
+    flex-basis: 100%;
+  }
+}
+
+iframe {
+  width: 100%;
+  max-width: 800px;
+  aspect-ratio: 1 / 1;
+}
+
+/* buttons */
+button, .download-button a {
+  padding: 0.6rem 1rem;
+  border-radius: 0;
+  background-color: #000;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  width: fit-content;
+  transition: all 0.2s;
+  border: 2px solid #000;
+}
+button:hover, .download-button a:hover {
+  color: #000;
+  background-color: #fff;
 }
