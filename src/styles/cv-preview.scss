@@ -1,0 +1,9 @@
+.cv-preview {
+    border: 1px solid #000;
+    height: auto;
+    max-height: calc(100vh - 5rem);
+    min-width: 800px;
+    width: auto;
+    aspect-ratio: 7 / 10;
+    font-size: 0.6vw;
+}
