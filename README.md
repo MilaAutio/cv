@@ -1,3 +1,14 @@
+# Application for creating a CV
+
+An application where users can create a CV by filling out a form and download it as a PDF file.
+
+## TODO
+
+Ability to include an image in the CV.
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
